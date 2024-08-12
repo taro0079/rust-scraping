@@ -9,7 +9,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     for element in elements {
         if let Some(article_element) = element.select(&href_selector).next() {
             let title_selector = scraper::Selector::parse("div.newsFeed_item_title").unwrap();
-            let text = article_element.select(&title_selector).next().unwrap().text().next().unwrap();
+            let text = article_element
+                .select(&title_selector)
+                .next()
+                .unwrap()
+                .text()
+                .next()
+                .unwrap();
             let link = article_element.value().attr("href").unwrap_or("No link");
 
             println!("Title: {} \nLink: {}\n", text, link);
